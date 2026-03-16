@@ -1,0 +1,121 @@
+\documentclass[12pt]{article}
+
+%packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{hyperref}
+
+\geometry{a4paper, margin=1in}
+
+%colours
+\definecolor{accent}{HTML}{2563EB}   % vibrant blue
+\definecolor{darkbg}{HTML}{1E293B}   % dark slate
+\definecolor{lightgray}{HTML}{94A3B8}
+
+%suppress page number on title
+\pagenumbering{gobble}
+
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+
+\vspace*{2cm}
+
+%decorative rule
+{\color{accent}\rule{\linewidth}{2pt}}
+
+\vspace{1.5cm}
+
+%title
+{\fontsize{42}{50}\selectfont\bfseries\color{darkbg} Audio Fingerprinting\\[6pt]}
+
+\vspace{0.8cm}
+
+%subtitle
+{\Large\color{lightgray}\textit{(PS1)}}
+
+\vspace{1.2cm}
+
+{\color{accent}\rule{0.4\linewidth}{1pt}}
+
+\vspace{1.5cm}
+
+%project info
+{\LARGE\color{darkbg} Working with audio files and spectrograms}
+
+\vspace{0.6cm}
+
+{\large\color{lightgray} Technical Notes}
+
+\vspace{3cm}
+
+%author / date block
+\begin{minipage}{0.6\textwidth}
+\centering
+{\large\color{darkbg}\textbf{Facundo Franchino} \&{} \textbf{Hans Dietrich}}
+
+\vspace{1cm}
+
+{\color{lightgray}\today}
+\end{minipage}
+
+\vfill
+
+%ottom rule
+{\color{accent}\rule{\linewidth}{2pt}}
+
+\end{center}
+\end{titlepage}
+
+%start page numbering for content
+\pagenumbering{arabic}
+
+
+\section{Objectives}
+Build the simplest possible audio fingerprinting prototype from scratch.  
+The goal of this session is to load an audio file, visualise its spectrogram, 
+and detect prominent spectral peaks as a first approximation to a song fingerprint.
+
+
+
+\section{Background}
+A digital audio signal is a sequence of samples taken at a fixed sample rate.  
+By applying the Short-Time Fourier Transform (STFT), 
+the signal can be represented as a spectrogram, 
+showing how frequency content evolves over time.  
+Audio fingerprinting systems such as Shazam rely 
+on robust local peaks in this time--frequency representation.
+
+
+\section{Setup}
+
+We used Python 3 with \texttt{librosa}, \texttt{numpy}, \texttt{scipy}, and \texttt{matplotlib}.  
+An MP3 file from the \textit{Twin Peaks} soundtrack was loaded and analysed locally.
+
+\section{Tasks}
+
+\subsection{Load and inspect the audio file}
+
+Load an MP3 file, inspect its sample rate, and plot the waveform in order to understand digital audio as a sequence of samples.
+
+\subsection{Generate and interpret the spectrogram}
+
+Compute the STFT, convert magnitudes to decibels, and display the spectrogram using a logarithmic frequency axis.
+
+\subsection{Detect local spectral peaks}
+
+Apply a local maximum filter and an amplitude threshold to detect salient peaks in the spectrogram, then visualise them as candidate constellation points.
+
+\section{Notes}
+
+The main practical issue was choosing suitable peak-detection parameters.  
+A threshold that was too low produced too many peaks, especially at low frequencies.  
+Increasing the neighbourhood size, raising the threshold, and suppressing the lowest frequency bins produced a much cleaner peak map.
+
+
+\end{document}
